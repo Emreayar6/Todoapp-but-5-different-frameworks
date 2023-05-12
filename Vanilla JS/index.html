@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanilla JS</title>
+  </head>
+  <body>
+    <ul id="todos">
+      <!-- We will add our todos here -->
+    </ul>
+
+    <!-- Adding Todos-->
+    <form>
+      <input name="todo" type="text" />
+      <input type="submit" value="Add Todo" />
+    </form>
+
+    <!-- Vanilla JS -->
+    <script>
+      // Select Elements
+      // You can use `const`, I prefer `let` since it's a basic project
+      let form = document.querySelector("form");
+      let input = document.querySelector('input[name="todo"]');
+      let todoList = document.querySelector("#todos");
+
+      // To keep the data in the storage, we are using `local storage``
+
+      const Todos = JSON.parse(localStorage.getItem("todos")) || [];
+      const dataTodo = [];
+
+      const pushTodo = (element) => {
+        dataTodo.push(element);
+        const li = document.createElement("li");
+        li.innerHTML = element;
+        todoList.appendChild(li);
+        localStorage.setItem("todos", JSON.stringify(dataTodo));
+        input.value = "";
+      };
+
+      // Add event listener
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        pushTodo(input.value);
+      };
+
+      Todos.forEach((element) => {
+        pushTodo(element);
+      });
+    </script>
+  </body>
+</html>
